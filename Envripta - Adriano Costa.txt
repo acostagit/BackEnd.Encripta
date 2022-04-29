@@ -1,0 +1,387 @@
+
+Teste Backend C# .Net Encripta
+Adriano Costa
+---------------------------------------------------------------------------------------------------
+
+public class Empresa
+{
+	public int Id { get; set; }
+	public string Nome { get; set; }
+}
+
+public class Pessoa
+{
+public int Id { get; set; }
+public string Nome { get; set; } 
+public string Sobrenome { get; set; }
+public DateTime DataNascimento { get; set; } 
+public Empresa Empresa { get; set; }
+}
+
+1. Escreva o código em Linq para executar ordenação descendente por Sobrenome de 
+uma lista da classe acima (List<Pessoa>)
+R: 
+
+  Contexto para testes:
+   public class Empresa
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+    }
+
+    public class Pessoa
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public Empresa Empresa { get; set; }
+	}
+
+    public static IList<Pessoa> CriarListaPessoas()
+    {
+        var pessoas = new List<Pessoa>()
+            {
+                new Pessoa  {
+                    Id = 100,
+                    Nome = "Dalva",
+                    Sobrenome = "Olveira",
+                    DataNascimento = new DateTime().AddYears(30),
+                    Empresa = new Empresa()
+                    {
+                        Id = 1,
+                        Nome = "XTZ Cell"
+                    }
+                },
+                new Pessoa  {
+                    Id = 100,
+                    Nome = "Maria",
+                    Sobrenome = "Waza",
+                    DataNascimento = new DateTime().AddYears(30),
+                    Empresa = new Empresa()
+                    {
+                        Id = 1,
+                        Nome = "Atech"
+                    }
+                },
+                new Pessoa
+                {
+                    Id = 200,
+                    Nome = "Rosa",
+                    Sobrenome = "Silva",
+                    DataNascimento = new DateTime().AddYears(52),
+                    Empresa = new Empresa()
+                    {
+                        Id = 2,
+                        Nome = "Brasil Aço"
+                    }
+                },
+                new Pessoa
+                {
+                    Id = 300,
+                    Nome = "Walter",
+                    Sobrenome = "Zelo",
+                    DataNascimento = new DateTime().AddYears(20),
+                    Empresa = new Empresa()
+                    {
+                        Id = 50,
+                        Nome = "Samsung"
+                    }
+                },
+                  new Pessoa
+                {
+                    Id = 300,
+                    Nome = "Amarilia",
+                    Sobrenome = "Ferreira",
+                    DataNascimento = new DateTime().AddYears(25),
+                    Empresa = new Empresa()
+                    {
+                        Id = 88,
+                        Nome = "Vallet"
+                    }
+                },
+                     new Pessoa
+                {
+                    Id = 400,
+                    Nome = "Amarilia",
+                    Sobrenome = "Augustina",
+                    DataNascimento = new DateTime().AddYears(25),
+                    Empresa = new Empresa()
+                    {
+                        Id = 89,
+                        Nome = "Empresa ABC"
+                    }
+                }
+
+            };
+        return pessoas;
+    }
+
+    public static void ImprimePessoas(Pessoa pessoa)
+    {
+        ToString(pessoa);
+    }
+
+    public static void ToString(Pessoa pessoa)
+    {
+        Console.WriteLine(pessoa.Sobrenome + ", " + pessoa.Nome + "--" + pessoa.DataNascimento);
+        Console.WriteLine(pessoa.Empresa.Id + ", " + pessoa.Empresa.Nome);
+        Console.WriteLine("*********************************************");
+    }
+
+ IList<Pessoa> pessoas = Pessoa.CriarListaPessoas();
+ 
+	pessoas = pessoas.OrderByDescending(x => x.Sobrenome).ToList();
+---------------------------------------------------------------------------------------------------------
+
+2. Escreva um loop na mesma classe usando Parallel.ForEach (ou Parallel.For) que faça a iteração em todos os itens dalista.
+
+	Parallel.ForEach(pessoas, pessoa =>
+	{
+		Pessoa.ImprimePessoas(pessoa);
+	});
+
+---------------------------------------------------------------------------------------------------------
+3. Escreva em c# dois design patterns de sua escoha e diga para que servem:
+
+1) Padrão Adapter --> Converte uma interface de uma classe para outra interface que o cliente espera encontrar. Portanto, serve para tornar compatíveis classes que antes não poderiam serem utilizadas em conjunto devido as suas diferenças de interface. Este padrão é utilizado frequentemente em manutenções de códigos legados,  em classes muitas vezes não são compatíveis com o legado.
+
+2) Facade --> padrão Facade fornece uma interface unica para um conjunto de interfaces em um subsistema. Ajuda a reduzir a complexidade facilitando seu entendimento e manutenção do sistema.
+---------------------------------------------------------------------------------------------------------
+
+4. Escreva um extension method qualquer para uma string.
+
+	public static void ToString(Pessoa pessoa)
+	{
+		Console.WriteLine(pessoa.Sobrenome + ", " + pessoa.Nome + "--" + pessoa.DataNascimento);
+		Console.WriteLine(pessoa.Empresa.Id + ", " + pessoa.Empresa.Nome);
+		Console.WriteLine("*********************************************");
+	}
+
+	public static void ImprimePessoas(Pessoa pessoa)
+    {
+        ToString(pessoa);
+    }
+
+
+---------------------------------------------------------------------------------------------------------
+
+5. No Entity Framework, o que faz o método Include?
+
+ Eager Loading : método Include, faz carregamento de registros associados às entidades das consultas.
+ Exemplo: Suponha que estamos utilizando objeto DbContext, do banco de dados:
+
+            var pessoas = context.Pessoas
+                            .Include(b => b.Empresa)
+                            .ToList();
+
+---------------------------------------------------------------------------------------------------------
+
+6. Qual a diferença entre FirstOrDefault(); e First(); do Linq?
+
+FirstOrDefault irá retornar o valor padrão de um objeto vazio, uma classe com valor null. 
+
+First, gera uma exceção de System.InvalidOperationException.
+
+---------------------------------------------------------------------------------------------------------
+
+7. No Controller do MVC cite dois possiveis retornos como ActionResult e explique:
+
+Actions podem retornar diversas coisas tais como: models para views (ViewResult), file stream (FileStreamResult), etc...
+e é o tipo de retorno de um método de um Controller.
+
+---------------------------------------------------------------------------------------------------------
+
+8. Usando Jquery, selecione todos os elementos <DIV> de uma página que
+contenheam a classeCSS “okButton”
+
+Contexto:
+<div id="main">
+	<div class="form-cadastro">Nome</div>
+	<div class="form-cadastro">Sub 1</div> 
+	<div class="botao"><button id="btnSend" class="okButton">Enviar</div> 
+</div>
+$("#main .okButton").text("Send");
+---------------------------------------------------------------------------------------------------------
+
+9. Usando Jquery, adicione e remova a classe CSS de um elemento:
+
+$('#btnSend').addClass('botao-azul').removeClass('botao-cinza');
+
+.botao-cinza {
+  background-color: #ff0985;
+  color: white;
+  border: 2px solid black;  
+}
+
+.botao-azul{
+ cursor: pointer;
+ color: blue;
+}
+
+---------------------------------------------------------------------------------------------------
+10. Escreva um algoritmo de fatorial usando C#.	
+
+	int fatorial = 1;
+	int numero = 5; 
+	// 5! =  5*4*3*2*1 = 120
+	
+	for (int n = 1; n <= numero; n++)
+	{
+		fatorial *= n;
+		Console.WriteLine("Fatorial de (" + n + ")= " + fatorial);
+	}            
+			
+---------------------------------------------------------------------------------------------------
+11. Qual o código SQL resultando do comando 
+(from t in db.TB_User where t.name.StartsWith(variável) orderby t.name select t)
+
+SELECT *
+FROM tb_user t
+WHERE t.name like ('%variavel')
+Order by  t.name;
+
+---------------------------------------------------------------------------------------------------
+12. Imagine que você esteja em um projeto em que a empresa irá desenvolver seu próprio banco de dados, pois ela não pretende usar nenhum banco disponível no mercado, e você foi designado para arquitetar e desenvolver este banco. 
+Tendo em mente que o projeto se trata de um 
+gerenciador do catálogo de filmes, em que seja possível buscar os filmes por título, ator, diretor e afins. 
+Como você criaria esse banco?() 
+
+Dominios
+Catalogo = Lista em formato de catálogo disponibilidados.
+Filme = Conteúdo que será vistao pelo usuário
+Genero = Define o genêro do filme (Drama, Ação, Terror, Aventura...)
+Categoria = Tipo de filme [Guerra, Luta]
+Perfil= gerado pelo usuário para preferências e "Minha Lista"
+Minha Lista = Lista de vídeos armazenados para ver depois.
+Elenco = Personagens que fazem parte de um determinado filme, ou diretor, ator e outros do mesmo tipo.
+Titulo = Nome do filme
+Capa = Figura descritiva de um filme.
+Plano: Plano de acesso que o cliente irá contratar para uma assinatura da plataforma.
+Cliente: Cliente que contrata o acesso na plataforma de filmes.
+Usário: Qualquer pessoa que tenha acesso ao sistema.
+Assinatura: Assinatura que o cliente faz no sistema para acesso à plataforma.
+
+Use Cases: Create, List,Delete, Get, Update.
+
+** Tabelas (Modelagem):
+Catalogo: Id, Filme, Perfil
+Genero: (Id, Nome, Categoria, Activo, DataCadastro, UsuarioCadastro, Categoria)
+Filme: Id, Nome, Resumo, Categoria, Genero, DataCadastro, UsuarioCadastro
+Categoria: Id, Nome, DataCadastro, UsuarioCadastro
+Peril: Id, Nome, DataCadastro
+Minha Lista: Id, Filmes, DataCadastro
+Elenco: Id, Nome, DataCadastro, UsuarioCadastro
+Titulo: Id, Descricao
+Capa: Id, Descricao, Filme
+Usuario: Id, Nome, Perfil, DataCadastro
+Plano: Id, Cliente, Assinatura, Tipo, Valor
+
+Módulos Genéricos:
+  Pagamento: Tipo de Assinatura, Usuario
+  Autenticacao
+  Assinatura: Id, Usuario, Validade
+
+
+Genero, Categoria
+	
+	Gerenciador do Catálogo de Filmes
+	Agregados -> Categoria, Genero(Acao, Aventura, Animação, Rock, Esportes) / Categoria [Guerra, Luta, Documentario, Infantil, Shows, ]), Cast Member(Elenco), Video???
+	
+	REST -> Application
+	Use Cases: Create, List, Delete, Get, Update
+
+---------------------------------------------------------------------------------------------------
+13. Implemente o método que calcule a diferença que o usuário deverá pagar ao fazer 
+upgrade do plano de assinatura. Com o valor retornado pelo méotodo será feita a 
+cobrança extra da diferença entre os planos no ato do upgrade referente aos dias 
+restantes, sem alterar a data de pagamento do cliente.
+Por exemplo: 
+Usuário assinou o plano R$ 30,00 no dia 01/01, no dia 09/01 ele fez 
+upgrade para o plano de R$ 60,00, então ele precisa pagar a diferença relativa dos 
+dias restante.
+
+public void CalcularUpgradePlano(Plano plano)
+{
+	IPlano plano =  Plano();
+	
+	var diasAPagar = plano.Valor/60;
+	var diasDiferenca = MesInteiro-DataHoje(); // retornar os dias restantes.
+	plano.Assinatura.Tipo = plano.Tipo.Plus; //Novo tipo de plano. Apenas informação.
+	
+	plano.Assinatura.Valor = diasDiferenca  * diasAPagar;
+		
+}
+
+---------------------------------------------------------------------------------------------------
+14. Considerando que a entidade “User” tem a propriedade “Permissions” que 
+representa as permissões do usuário em forma de bitwise:
+
+public class User
+{
+public int Permissions { get; set; } 
+[...outras propriedades...]
+}
+public enum PermissionsBitwise
+{
+Movies = 1,
+Series = 2,
+Clips = 4,
+MP3 = 8,
+Boxes = 16,
+Episodes = 32,
+Albums = 64,
+Animacoes = 128,
+Channels = 256,
+Live = 512,
+RealityShows = 1024
+}
+Como você verificaria se o User tem a permissão Animacoes?
+  if(user.Permissions = PermissionsBitwise.Animacoes)
+  {
+	//TODO...
+  }
+
+---------------------------------------------------------------------------------------------------
+15. Choose a sorting algorithm and explain it.
+ Os algoritmos de ordenação (sorting algorithm) são utilizados para ordenar uma estrutura de dados, como ordem numérica.
+ Exemplo:
+ Bubble Sort: Algoritmo imita o movimento das bolhas em água com gás. As bolhas representam os elementos da estrutura de dados.
+ Nota: Considerado com complexidade quadrática O(n^2)
+ 
+---------------------------------------------------------------------------------------------------
+ 
+16. What is the difference between Hashing and Encrypting.
+Encryption: é o processo de ser criptograr um dado (dado qualquer). 
+Hashing: é o processo de se gerar uma sequência de bits baseados em um dado de entrada como único.
+
+A criptografia envolve a conversão de texto simples legível por humanos em texto incompreensível, conhecido como texto cifrado
+cifrar = registrar em cifras (algarismos, números);
+
+---------------------------------------------------------------------------------------------------
+17. What is the difference between symmetric and asymmetric keys?
+Symmetric encryption: utiliza uma única chave para encriptar e decifrar informação.
+Asymmetric encryption: utiliza pares de chaves públicas e privadas para encriptar e decifrar informação sensível.
+
+
+18.Explain the man-in-the-middle attack.
+N
+
+---------------------------------------------------------------------------------------------------
+19. What is the difference between a process and a thread?
+  Processo, é um programa, porém, cada processo eh independente. Possui alocação própria recursos (memória, pilhas e variáveis).
+   Thread é uma tarefa que pode ser executada em concorrência. As threads compartilham seus recursos ao contrário de um Processo. 
+   O mesmo espaço de memória,  as mesmas variáveis.
+  
+   Thread é uma sequência de instruções sendo executadas, ou seja, tarefas que podem ser executadas em concorrência.
+
+Exemplos: se sua aplicação envia um email cada vez que um registro é gravado, você pode enviar o email em um processo em separado, pois teoricamente são eventos independentes. 
+  Se você está fazendo uma rotina de ordenação como o quicksort, ou mergesort, você pode criar threads que vão ordenar partes diferentes do mesmo vetor, e portanto têm que compartilhar o acesso ao vetor que está sendo ordenado.
+
+---------------------------------------------------------------------------------------------------
+20. What  is a mutex
+Princípio da exclusão mútua, ou seja, técnica de programação concorrente para evitar que dois processos ou threads - ou mais - tenham acesso simultaneos a um recurso compartilhado. Dessa forma, os processos ou threads ficariam travados.
+* Travados: Deadlock ou Inanição (morrer ou dormir pra sempre).
+
+
+---------------------------------------------------------------------------------------------------
